@@ -5,11 +5,8 @@ project (pptb)
 set(CMAKE_PREFIX_PATH /users/ankushj/lcls2/install/lib)
 
 find_library(XTCDATA_LIB NAMES libxtc.so)
-# add_library(XTCDATALIB SHARED IMPORTED)
 
 include_directories("/users/ankushj/lcls2/install/include")
-# link_directories("/users/ankushj/lcls2/install/lib")
-# find_package(libxtc REQUIRED)
 
 add_executable(pptb
   src/main.cpp src/EventGenerator.cpp)

@@ -1,5 +1,10 @@
 #include "EventGenerator.hh"
 
+FexDef FexDef;
+PgpDef PgpDef;
+PadDef PadDef;
+HsdConfigDef HsdConfigDef;
+
 FexDef::FexDef() {
     NameVec.push_back({"floatFex", XtcData::Name::DOUBLE});
     NameVec.push_back({"arrayFex", XtcData::Name::FLOAT, 2});

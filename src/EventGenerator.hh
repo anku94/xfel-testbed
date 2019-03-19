@@ -20,6 +20,7 @@
 
 #define BUFSIZE 0x4000000
 
+
 class FexDef : public XtcData::VarDef {
  public:
   enum index {
@@ -38,7 +39,7 @@ class FexDef : public XtcData::VarDef {
 
   FexDef();
 
-} FexDef;
+};
 
 class PgpDef : public XtcData::VarDef {
  public:
@@ -46,7 +47,7 @@ class PgpDef : public XtcData::VarDef {
 
   PgpDef();
 
-} PgpDef;
+};
 
 class PadDef : public XtcData::VarDef {
  public:
@@ -54,7 +55,7 @@ class PadDef : public XtcData::VarDef {
 
   PadDef();
 
-} PadDef;
+};
 
 class DebugIter : public XtcData::XtcIterator {
  public:
@@ -98,7 +99,7 @@ class HsdConfigDef : public XtcData::VarDef {
 
   HsdConfigDef();
 
-} HsdConfigDef;
+};
 
 void saveXtc(XtcData::Dgram& dg, FILE* xtcFile);
 
