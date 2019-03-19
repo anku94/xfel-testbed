@@ -20,7 +20,6 @@
 
 #define BUFSIZE 0x4000000
 
-
 class FexDef : public XtcData::VarDef {
  public:
   enum index {
@@ -38,7 +37,6 @@ class FexDef : public XtcData::VarDef {
   };
 
   FexDef();
-
 };
 
 class PgpDef : public XtcData::VarDef {
@@ -46,7 +44,6 @@ class PgpDef : public XtcData::VarDef {
   enum index { floatPgp, array0Pgp, intPgp, array1Pgp };
 
   PgpDef();
-
 };
 
 class PadDef : public XtcData::VarDef {
@@ -54,7 +51,6 @@ class PadDef : public XtcData::VarDef {
   enum index { arrayRaw };
 
   PadDef();
-
 };
 
 class DebugIter : public XtcData::XtcIterator {
@@ -98,30 +94,36 @@ class HsdConfigDef : public XtcData::VarDef {
   enum index { enable, raw_prescale };
 
   HsdConfigDef();
-
 };
-
-void saveXtc(XtcData::Dgram& dg, FILE* xtcFile);
 
 class EventGenerator {
  private:
-   XtcData::NamesLookup m_namesLookup1;
-   XtcData::Dgram& createTransition(XtcData::TransitionId::Value transId);
+  XtcData::NamesLookup m_namesLookup1;
 
-  void pgpExample(XtcData::Xtc& parent, XtcData::NamesLookup& namesLookup, XtcData::NamesId& namesId);
+  XtcData::Dgram& createTransition(void* buf,
+                                   XtcData::TransitionId::Value transId);
 
-  void fexExample(XtcData::Xtc& parent, XtcData::NamesLookup& namesLookup, XtcData::NamesId& namesId);
+  void pgpExample(XtcData::Xtc& parent, XtcData::NamesLookup& namesLookup,
+                  XtcData::NamesId& namesId);
 
-  void padExample(XtcData::Xtc& parent, XtcData::NamesLookup& namesLookup, XtcData::NamesId& namesId);
+  void fexExample(XtcData::Xtc& parent, XtcData::NamesLookup& namesLookup,
+                  XtcData::NamesId& namesId);
 
-  void addNames(XtcData::Xtc& xtc, XtcData::NamesLookup& namesLookup, unsigned& nodeId, unsigned segment);
-  void addData(XtcData::Xtc& xtc, XtcData::NamesLookup& namesLookup, unsigned nodeId,
-               unsigned segment);
+  void padExample(XtcData::Xtc& parent, XtcData::NamesLookup& namesLookup,
+                  XtcData::NamesId& namesId);
+
+  void addNames(XtcData::Xtc& xtc, XtcData::NamesLookup& namesLookup,
+                unsigned& nodeId, unsigned segment);
+
+  void addData(XtcData::Xtc& xtc, XtcData::NamesLookup& namesLookup,
+               unsigned nodeId, unsigned segment);
 
  public:
   EventGenerator();
 
-  void genConfig();
+  void genConfig(void* buf);
 
   void genEvent(void* buf);
+
+  int saveXtc(void* buf, FILE* xtcFile);
 };

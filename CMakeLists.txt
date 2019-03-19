@@ -10,6 +10,5 @@ include_directories("/users/ankushj/lcls2/install/include")
 
 add_executable(pptb
   src/main.cpp src/EventGenerator.cpp)
-  # src/main.cpp src/MyClass.cpp)
 
 target_link_libraries(pptb "${XTCDATA_LIB}")
