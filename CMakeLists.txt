@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 project (pptb)
 
 set(CMAKE_PREFIX_PATH /users/ankushj/lcls2/install/lib)

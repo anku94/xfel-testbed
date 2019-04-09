@@ -51,9 +51,10 @@ void DgramServer::createSocket() {
  */
 int DgramServer::listen(void *buf, size_t max_bytes) {
   char ip_str[INET6_ADDRSTRLEN];
-  socklen_t addr_len;
 
   struct sockaddr_storage their_addr;
+  socklen_t addr_len = sizeof their_addr;
+
   int bytes_read = 0;
 
   bytes_read = recvfrom(sockfd, buf, max_bytes, 0,
@@ -64,10 +65,10 @@ int DgramServer::listen(void *buf, size_t max_bytes) {
     return bytes_read;
   }
 
-  printf("listener: got packet from %s\n",
-         inet_ntop(their_addr.ss_family,
-                   get_in_addr((struct sockaddr *)&their_addr), ip_str,
-                   sizeof ip_str));
+  // printf("listener: got packet from %s\n",
+         // inet_ntop(their_addr.ss_family,
+                   // get_in_addr((struct sockaddr *)&their_addr), ip_str,
+                   // sizeof ip_str));
 
   return bytes_read;
 }

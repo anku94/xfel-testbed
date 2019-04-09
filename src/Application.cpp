@@ -22,18 +22,42 @@ VetoEventClient::~VetoEventClient() {
 
 void Application::vetoEventServeWorker() {
   fprintf(stderr, "hey I'm trying to SERV...\n");
-  char buffer[10];
-  strcpy(buffer, "hello");
-  server->smdSender->send(buffer, 5);
+  char buffer[65536];
+
+  struct timespec start, now;
+  clock_gettime(CLOCK_MONOTONIC, &start);
+
+  int counter = 0;
+
+  while (1) {
+    int buf_size = eventGenerator->genEvent(buffer);
+    // int buf_size = 880;
+    int res = server->smdSender->send(buffer, buf_size);
+    counter++;
+
+    if (counter == 10000) {
+      clock_gettime(CLOCK_MONOTONIC, &now);
+      uint64_t diff =
+          BILLION * (now.tv_sec - start.tv_sec) + (now.tv_nsec - start.tv_nsec);
+      double timedelta = diff * 1.0 / BILLION;
+      double eventRate = counter / 1000 / timedelta; // kHz
+      fprintf(stdout, "Time taken: %lf, evtrate: %lf kHz\n", timedelta,
+              eventRate);
+      fprintf(stderr, "BufSize: %d\n", buf_size);
+      fprintf(stdout, "Throughput: %d MB/s\n", (int) (eventRate * buf_size / 1024.0));
+      start = now;
+      counter = 0;
+    }
+  }
 }
 
 void Application::vetoEventRecvWorker() {
   fprintf(stderr, "hey I'm trying to RECV...\n");
-  char buf[1024];
-  int bytes = client->smdReceiver->listen(buf, 1024);
-  buf[bytes] = '\0';
+  char buf[65536];
 
-  fprintf(stdout, "hey I'm received: %s\n", buf);
+  while (1) {
+    int bytes_read = client->smdReceiver->listen(buf, 65536u);
+  }
 }
 
 void Application::run() {
@@ -47,6 +71,10 @@ void Application::run() {
 Application::Application(const char *ip) {
   server = new VetoEventServer(ip);
   client = new VetoEventClient(ip);
+
+  eventGenerator = new EventGenerator();
+
+  eventGenerator->genConfig(perm_buf);
 }
 
 Application::~Application() {

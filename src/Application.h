@@ -9,6 +9,10 @@
 #define VETO_SMD_PORT "5002"
 #define VETO_DECSN_PORT "5003"
 
+#define UDP_MAX 65536
+#define BILLION 1000000000L
+
+
 class VetoEventServer {
  public:
   VetoEventServer(const char *ip);
@@ -34,6 +38,8 @@ class Application {
   void run();
 
  private:
+  EventGenerator *eventGenerator;
+
   void vetoEventServeWorker();
   void vetoEventRecvWorker();
 
@@ -41,4 +47,7 @@ class Application {
 
   VetoEventServer *server;
   VetoEventClient *client;
+
+  // char perm_buf[UDP_MAX];
+  char perm_buf[4194304];
 };

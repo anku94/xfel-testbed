@@ -123,7 +123,7 @@ class EventGenerator {
 
   void genConfig(void* buf);
 
-  void genEvent(void* buf);
+  int genEvent(void* buf);
 
   int saveXtc(void* buf, FILE* xtcFile);
 };

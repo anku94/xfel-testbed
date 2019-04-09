@@ -340,7 +340,7 @@ void EventGenerator::genConfig(void* buf) {
 // TODO buf - receive from user
 // TODO config - decide how to emit
 // TODO partition - decide how to join multiple
-void EventGenerator::genEvent(void* buf) {
+int EventGenerator::genEvent(void* buf) {
   struct timeval tv;
   XtcData::TypeId tid(XtcData::TypeId::Parent, 0);
   uint32_t env = 0;
@@ -359,6 +359,9 @@ void EventGenerator::genEvent(void* buf) {
   for (unsigned iseg = 0; iseg < nSegments; iseg++) {
     addData(dgram.xtc, m_namesLookup1, nodeid1, iseg);
   }
+
+  int dgram_size = sizeof(dgram) + dgram.xtc.sizeofPayload();
+  return dgram_size;
 }
 
 int EventGenerator::saveXtc(void* buf, FILE* xtcFile) {
