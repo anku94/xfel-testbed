@@ -24,3 +24,17 @@ int main() {
   fclose(f);
   free(buf);
 }
+
+// int main() {
+  // DgramServer d("4950");
+  // char c[1024];
+  // memset(c, 0, 1024);
+  // d.listen(c, 1024u);
+  // printf("%s\n", c);
+  // return 0;
+// }
+
+// int main(int argc, char *argv[]) {
+  // DgramClient c("10.92.3.24", "4950");
+  // c.send(argv[1], strlen(argv[1]));
+// }

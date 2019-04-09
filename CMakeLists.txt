@@ -9,6 +9,6 @@ find_library(XTCDATA_LIB NAMES libxtc.so)
 include_directories("/users/ankushj/lcls2/install/include")
 
 add_executable(pptb
-  src/main.cpp src/EventGenerator.cpp)
+  src/DgramServer.cpp src/DgramClient.cpp src/main.cpp src/EventGenerator.cpp)
 
 target_link_libraries(pptb "${XTCDATA_LIB}")
