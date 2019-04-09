@@ -12,6 +12,6 @@ find_package(Threads REQUIRED)
 include_directories("/users/ankushj/lcls2/install/include")
 
 add_executable(pptb
-  src/DgramServer.cpp src/DgramClient.cpp src/main.cpp src/EventGenerator.cpp)
+  src/DgramServer.cpp src/DgramClient.cpp src/main.cpp src/EventGenerator.cpp src/Application.cpp)
 
 target_link_libraries(pptb "${XTCDATA_LIB}" Threads::Threads)
