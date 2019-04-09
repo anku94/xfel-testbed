@@ -1,8 +1,8 @@
 #include "Application.h"
 
 VetoEventServer::VetoEventServer(const char *ip) {
-  smdSender = new DgramServer(VETO_SMD_PORT);
-  vetoReceiver = new DgramClient(ip, VETO_DECSN_PORT);
+  vetoReceiver = new DgramServer(VETO_DECSN_PORT);
+  smdSender = new DgramClient(ip, VETO_SMD_PORT);
 }
 
 VetoEventServer::~VetoEventServer() {
@@ -11,8 +11,8 @@ VetoEventServer::~VetoEventServer() {
 }
 
 VetoEventClient::VetoEventClient(const char *ip) {
-  smdReceiver = new DgramClient(ip, VETO_SMD_PORT);
-  vetoGenerator = new DgramServer(VETO_SMD_PORT);
+  vetoGenerator = new DgramClient(ip, VETO_DECSN_PORT);
+  smdReceiver = new DgramServer(VETO_SMD_PORT);
 }
 
 VetoEventClient::~VetoEventClient() {
@@ -22,10 +22,18 @@ VetoEventClient::~VetoEventClient() {
 
 void Application::vetoEventServeWorker() {
   fprintf(stderr, "hey I'm trying to SERV...\n");
+  char buffer[10];
+  strcpy(buffer, "hello");
+  server->smdSender->send(buffer, 5);
 }
 
 void Application::vetoEventRecvWorker() {
   fprintf(stderr, "hey I'm trying to RECV...\n");
+  char buf[1024];
+  int bytes = client->smdReceiver->listen(buf, 1024);
+  buf[bytes] = '\0';
+
+  fprintf(stdout, "hey I'm received: %s\n", buf);
 }
 
 void Application::run() {
@@ -36,7 +44,9 @@ void Application::run() {
   recv->join();
 }
 
-Application::Application() {
+Application::Application(const char *ip) {
+  server = new VetoEventServer(ip);
+  client = new VetoEventClient(ip);
 }
 
 Application::~Application() {

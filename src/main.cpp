@@ -4,8 +4,8 @@
 
 // using namespace XtcData;
 
-int main() {
-  Application a;
+int main(int argc, char *argv[]) {
+  Application a(argv[1]);
   a.run();
   // TypeId tid(TypeId::Parent, 0);
   // printf("hello world: %d\n", tid.version());
